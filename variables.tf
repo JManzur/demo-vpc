@@ -11,7 +11,7 @@ variable "demo_tags" {
   default = {
     service     = "jm-demo",
     environment = "demo"
-    owner       = "jmanzurst@gmail.com"
+    owner       = "jm-example@mail.com"
   }
 }
 
