@@ -14,7 +14,7 @@ Terraform template to deploy a VPC with segmented subnets, basic routing tables,
 
 ### Deployment diagram (One AZ):
 
-![App Screenshot](https://lh3.googleusercontent.com/-SmjZX8ZbVkA/YWcDw3FwvTI/AAAAAAAAFso/mUHURQ-LW2o02NfSmHmJzIdVPBice2cBQCLcBGAsYHQ/s16000/demo-vpc.drawio.png)
+![App Screenshot](https://1.bp.blogspot.com/-iXIi3lD7s_s/YWcHd107v8I/AAAAAAAAFs4/JsqaQH0LpLojlNoBnq9dXjJpds8dvZfqgCLcBGAsYHQ/s16000/demo-vpc.drawio.png)
 
 ## Tested with: 
 
