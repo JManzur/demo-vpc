@@ -1,6 +1,21 @@
 # Demo VPC
 Terraform template to deploy a VPC with segmented subnets, basic routing tables, security groups and of course everything properly tagged.
 
+## Resources deployed by this manifest:
+- 1 Private subnet per AZ.
+- 1 Database private subnet per AZ.
+- 1 Intranet subnet (segregated - no internet)  per AZ.
+- 1 Public subnet per AZ.
+- 1 Route table per subnet.
+- Single NAT Gateway.
+- Single Internet Gateway.
+- VPC flow logs.
+- Demo "Denny All" Security Group.
+
+### Deployment diagram (One AZ):
+
+![App Screenshot](https://lh3.googleusercontent.com/-SmjZX8ZbVkA/YWcDw3FwvTI/AAAAAAAAFso/mUHURQ-LW2o02NfSmHmJzIdVPBice2cBQCLcBGAsYHQ/s16000/demo-vpc.drawio.png)
+
 ## Tested with: 
 
 | Environment | Application | Version  |
@@ -44,9 +59,7 @@ Edit the necesaries variables and cidr and apply
 
 ## Resources
 
-Here are some related projects
-
-[AWS VPC Terraform module](https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest)
+- [AWS VPC Terraform module](https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest)
 
 ## Author
 
