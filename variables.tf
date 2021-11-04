@@ -6,16 +6,16 @@ variable "aws_region" {
 
 ###  Tags Variables ###
 
-variable "demo_tags" {
+variable "project-tags" {
   type = map(string)
   default = {
-    service     = "jm-demo",
+    service     = "demo-vpc",
     environment = "demo"
-    owner       = "jm-example@mail.com"
+    owner       = "example@mail.com"
   }
 }
 
-variable "tag_project" {
+variable "resource-name-tag" {
   type    = string
   default = "demo"
 }

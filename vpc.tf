@@ -15,11 +15,11 @@ module "vpc" {
   database_subnets = ["10.10.21.0/24", "10.10.22.0/24", "10.10.23.0/24"]
   intra_subnets    = ["10.10.31.0/24", "10.10.32.0/24", "10.10.33.0/24"]
 
-  tags                 = merge(var.demo_tags, { Name = "${var.tag_project}-vpc" }, )
-  database_subnet_tags = merge(var.demo_tags, { Name = "${var.tag_project}-db_subnet" }, )
-  private_subnet_tags  = merge(var.demo_tags, { Name = "${var.tag_project}-private_subnet" }, )
-  public_subnet_tags   = merge(var.demo_tags, { Name = "${var.tag_project}-public_subnet" }, )
-  intra_subnet_tags    = merge(var.demo_tags, { Name = "${var.tag_project}-intra_subnet" }, )
+  tags                 = merge(var.project-tags, { Name = "${var.resource-name-tag}-vpc" }, )
+  database_subnet_tags = merge(var.project-tags, { Name = "${var.resource-name-tag}-db_subnet" }, )
+  private_subnet_tags  = merge(var.project-tags, { Name = "${var.resource-name-tag}-private_subnet" }, )
+  public_subnet_tags   = merge(var.project-tags, { Name = "${var.resource-name-tag}-public_subnet" }, )
+  intra_subnet_tags    = merge(var.project-tags, { Name = "${var.resource-name-tag}-intra_subnet" }, )
 
   #Deny Access to DB subnet form public subnet
   create_database_subnet_group = false
@@ -27,24 +27,24 @@ module "vpc" {
   #Routing tables 
   manage_default_route_table = true
 
-  default_route_table_tags  = merge(var.demo_tags, { Name = "${var.tag_project}-rt" }, )
-  private_route_table_tags  = merge(var.demo_tags, { Name = "${var.tag_project}-private_rt" }, )
-  public_route_table_tags   = merge(var.demo_tags, { Name = "${var.tag_project}-public_rt" }, )
-  database_route_table_tags = merge(var.demo_tags, { Name = "${var.tag_project}-db_rt" }, )
-  intra_route_table_tags    = merge(var.demo_tags, { Name = "${var.tag_project}-intra_rt" }, )
+  default_route_table_tags  = merge(var.project-tags, { Name = "${var.resource-name-tag}-rt" }, )
+  private_route_table_tags  = merge(var.project-tags, { Name = "${var.resource-name-tag}-private_rt" }, )
+  public_route_table_tags   = merge(var.project-tags, { Name = "${var.resource-name-tag}-public_rt" }, )
+  database_route_table_tags = merge(var.project-tags, { Name = "${var.resource-name-tag}-db_rt" }, )
+  intra_route_table_tags    = merge(var.project-tags, { Name = "${var.resource-name-tag}-intra_rt" }, )
 
   #Nat Gateway
   enable_nat_gateway = true
   single_nat_gateway = true
 
-  nat_gateway_tags = merge(var.demo_tags, { Name = "${var.tag_project}-ng" }, )
+  nat_gateway_tags = merge(var.project-tags, { Name = "${var.resource-name-tag}-ng" }, )
 
   #Deny all SG:
   manage_default_security_group  = true
   default_security_group_ingress = []
   default_security_group_egress  = []
 
-  default_security_group_tags = merge(var.demo_tags, { Name = "${var.tag_project}-sg" }, )
+  default_security_group_tags = merge(var.project-tags, { Name = "${var.resource-name-tag}-sg" }, )
 
   #VPC Flow Logs 
   enable_flow_log                      = true
@@ -52,5 +52,39 @@ module "vpc" {
   create_flow_log_cloudwatch_iam_role  = true
   flow_log_max_aggregation_interval    = 60
 
-  vpc_flow_log_tags = merge(var.demo_tags, { Name = "${var.tag_project}-vpc_logs" }, )
+  vpc_flow_log_tags = merge(var.project-tags, { Name = "${var.resource-name-tag}-vpc_logs" }, )
+}
+
+## Data Sources declarations ##
+## Fetch the vpc id to print and use the output
+data "aws_vpc" "selected" {
+  filter {
+    name   = "tag:Name"
+    values = ["demo-vpc"]
+  }
+
+  depends_on = [module.vpc]
+}
+
+## Fetch the public subnets ids to print and use the output
+data "aws_subnet_ids" "public" {
+  vpc_id = data.aws_vpc.selected.id
+
+  filter {
+    name   = "tag:Name"
+    values = ["demo-public_subnet"]
+  }
+
+  depends_on = [module.vpc]
+}
+
+## Fetch the privates subnets ids to print and use the output
+data "aws_subnet_ids" "private" {
+  vpc_id = data.aws_vpc.selected.id
+
+  filter {
+    name   = "tag:Name"
+    values = ["demo-private_subnet"]
+  }
+  depends_on = [module.vpc]
 }
