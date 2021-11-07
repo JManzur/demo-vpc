@@ -10,15 +10,15 @@ module "vpc" {
 
   #AZ's and Subnets Definition
   azs              = ["${var.aws_region}a", "${var.aws_region}b", "${var.aws_region}c"]
-  private_subnets  = ["10.48.1.0/24", "10.48.2.0/24", "10.48.3.0/24"]
-  public_subnets   = ["10.48.11.0/24", "10.48.12.0/24", "10.48.13.0/24"]
-  database_subnets = ["10.48.21.0/24", "10.48.22.0/24", "10.48.23.0/24"]
-  intra_subnets    = ["10.48.31.0/24", "10.48.32.0/24", "10.48.33.0/24"]
+  private_subnets  = ["10.48.10.0/24", "10.48.11.0/24", "10.48.12.0/24"]
+  public_subnets   = ["10.48.20.0/24", "10.48.21.0/24", "10.48.22.0/24"]
+  database_subnets = ["10.48.30.0/24", "10.48.31.0/24", "10.48.32.0/24"]
+  intra_subnets    = ["10.48.40.0/24", "10.48.41.0/24", "10.48.42.0/24"]
 
   tags                 = merge(var.project-tags, { Name = "${var.resource-name-tag}-vpc" }, )
-  database_subnet_tags = merge(var.project-tags, { Name = "${var.resource-name-tag}-db_subnet" }, )
   private_subnet_tags  = merge(var.project-tags, { Name = "${var.resource-name-tag}-private_subnet" }, )
   public_subnet_tags   = merge(var.project-tags, { Name = "${var.resource-name-tag}-public_subnet" }, )
+  database_subnet_tags = merge(var.project-tags, { Name = "${var.resource-name-tag}-db_subnet" }, )
   intra_subnet_tags    = merge(var.project-tags, { Name = "${var.resource-name-tag}-intra_subnet" }, )
 
   #Deny Access to DB subnet form public subnet
